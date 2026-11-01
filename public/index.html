@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube MP4 Downloader</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <div class="badge">YouTube → MP4</div>
+        <h1>動画をMP4としてダウンロード</h1>
+        <p class="subtitle">
+          YouTubeのURLを入力して、MP4ファイルとして取得できます。
+        </p>
+
+        <form id="downloadForm">
+          <label for="youtubeUrl">YouTube URL</label>
+          <input
+            id="youtubeUrl"
+            type="url"
+            placeholder="https://www.youtube.com/watch?v=..."
+            required
+          />
+
+          <button id="downloadBtn" type="submit">ダウンロード開始</button>
+        </form>
+
+        <div id="status" class="status" aria-live="polite">
+          動画URLを入力してください。
+        </div>
+
+        <div class="note">
+          注意: 著作権や利用規約に違反するコンテンツの保存・配布は禁止されています。<br />
+          取得できるのは、利用者が権利を持つ、または許可された動画に限ります。
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

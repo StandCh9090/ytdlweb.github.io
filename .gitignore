@@ -1,0 +1,58 @@
+const form = document.getElementById('downloadForm');
+const urlInput = document.getElementById('youtubeUrl');
+const status = document.getElementById('status');
+const button = document.getElementById('downloadBtn');
+
+function setStatus(message, type = '') {
+  status.textContent = message;
+  status.className = `status ${type}`.trim();
+}
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const url = urlInput.value.trim();
+  if (!url) {
+    setStatus('URLを入力してください。', 'error');
+    return;
+  }
+
+  button.disabled = true;
+  setStatus('動画を変換中です。しばらくお待ちください…', '');
+
+  try {
+    const response = await fetch('/api/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ url })
+    });
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data.error || 'ダウンロードに失敗しました。');
+    }
+
+    const blob = await response.blob();
+    const contentDisposition = response.headers.get('content-disposition');
+    const match = contentDisposition ? contentDisposition.match(/filename="?([^";]+)"?/) : null;
+    const fileName = match ? match[1] : 'download.mp4';
+
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = objectUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(objectUrl);
+
+    setStatus('MP4ファイルをダウンロードしました。', 'success');
+    urlInput.value = '';
+  } catch (error) {
+    setStatus(error.message || 'エラーが発生しました。', 'error');
+  } finally {
+    button.disabled = false;
+  }
+});

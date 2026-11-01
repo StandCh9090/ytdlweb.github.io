@@ -1,0 +1,14 @@
+{
+  "name": "ytdlweb",
+  "version": "1.0.0",
+  "private": true,
+  "description": "YouTube MP4 downloader demo for local / backend deployment",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "youtube-dl-exec": "^3.1.0"
+  }
+}

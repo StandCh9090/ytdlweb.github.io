@@ -1,1 +1,5 @@
-# ytdlweb.github.io
+node_modules
+downloads
+.env
+npm-debug.log*
+.DS_Store
